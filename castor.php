@@ -17,24 +17,26 @@ function main(): void
         io()->note('Message received : ' . json_encode($message) );
     }) ;
 
+    $nwjsServer->on('loaded',function() use ($nwjsServer)
+    {
+        $code = file_get_contents('nwMenu.js');
+        $nwjsServer->nwjsEval($code);
+    }) ;
+
+    $nwjsServer->on('nwjsEvent',function ($type,$payload)
+    {
+        if (in_array($type,['stdout_data','stderr_data']))
+            io()->warning($payload['data']);
+        elseif ($type == 'exit')
+        {
+            io()->error('Process exited with code : ' . $payload['exitCode'] . ' and signal : ' . $payload['termSignal']);
+            io()->error('Exiting castor ...');
+            die();
+        }
+    }) ;
+
     $loop->addPeriodicTimer(2, function () use ($nwjsServer) {
         echo "2 second passed\n";
-        $code = <<<JS
-                            console.log('Hello from PHP');
-                            console.log(nw);
-            
-                            var your_menu = new nw.Menu({ type: 'menubar' });
-                             var submenu = new nw.Menu();
-                             submenu.append(new nw.MenuItem({ label: 'Item A' }));
-                             submenu.append(new nw.MenuItem({ label: 'Item B' }));
-                             //
-                             your_menu.append(new nw.MenuItem({
-                                 label: 'First Menu',
-                                 submenu: submenu
-                             }));
-                             nw.Window.get().menu = your_menu;
-            JS;
-        $nwjsServer->nwjsEval($code);
     });
 
     $nwjsServer->run();

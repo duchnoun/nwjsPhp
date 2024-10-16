@@ -4,6 +4,10 @@ var client = new WebSocketClient();
 nw.App.token = nw.App.fullArgv[0] ;
 nw.App.auth = false ;
 
+setInterval(function(){
+    console.log('alive');
+},5000);
+
 client.on('connect', function(connection) {
     console.log('WebSocket Client Connected');
 
@@ -45,6 +49,11 @@ client.on('connect', function(connection) {
                 {
                     console.log('Auth success');
                     nw.App.auth = true ;
+
+                    sendMessage(connection,{
+                        action: 'loaded'
+                    }) ;
+
                     nw.App.intervalping = setInterval(function(){
 
                         if (nw.App.lastping)

@@ -92,6 +92,9 @@ class NwJsServerWS implements MessageComponentInterface {
 
         switch ($message->action)
         {
+            case 'loaded':
+                $this->emit('loaded');
+                break;
             case 'ping':
                 $from->send(json_encode(['action' => 'pong']));
                 break;
