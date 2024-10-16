@@ -6,5 +6,11 @@ mainMenu.append(new nw.MenuItem({
     label: 'File',
     submenu: submenu
 }));
-
-nw.Window.get().menu = mainMenu;
+// nw.Window.get().menu = mainMenu;
+nw.Window.getAll(function(windows)
+{
+    for (var i = 0; i < windows.length; i++)
+    {
+        windows[i].menu = mainMenu;
+    }
+})

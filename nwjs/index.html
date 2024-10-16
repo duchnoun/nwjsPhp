@@ -5,5 +5,28 @@
   </head>
   <body>
     Body !
+  <input type="file" onchange="loadfs();" />
+
+  <script>
+
+    function loadfs() {
+      var fileinput = document.querySelector('input[type=file]');
+      var path = fileinput.value;
+
+      // Read file with Node.js API
+      var fs = nw.require('fs');
+      fs.readFile(path, 'utf8', function (err, txt) {
+        if (err) {
+          console.error(err);
+          return;
+        }
+
+        console.log(txt);
+      });
+    }
+
+
+  </script>
   </body>
+
 </html>

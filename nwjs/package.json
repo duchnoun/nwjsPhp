@@ -1,6 +1,6 @@
 {
   "name": "main",
-  "chromium-args": "--enable-logging=stderr --disable-web-security --allow-running-insecure-content --mixed-context",
+  "chromium-args": "--enable-logging=stderr --disable-web-security --allow-running-insecure-content",
   "window": {
     "show": true,
     "frame": true,

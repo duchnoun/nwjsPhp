@@ -19,6 +19,30 @@ function main(): void
 
     $nwjsServer->on('loaded',function() use ($nwjsServer)
     {
+
+        $http = new React\Http\HttpServer(function (Psr\Http\Message\ServerRequestInterface $request) {
+            return React\Http\Message\Response::html(
+                file_get_contents('./nwjs/index.html'),
+            );
+        });
+
+        $socket = new React\Socket\SocketServer('127.0.0.1:9401');
+        $http->listen($socket);
+
+
+        $http = new React\Http\HttpServer(function (Psr\Http\Message\ServerRequestInterface $request) {
+            return React\Http\Message\Response::plaintext(
+                'window 2'
+            );
+        });
+
+        $socket = new React\Socket\SocketServer('127.0.0.1:9402');
+        $http->listen($socket);
+
+
+        $nwjsServer->createWindow('http://localhost:9401/');
+        $nwjsServer->createWindow('http://localhost:9402/');
+
         $code = file_get_contents('nwMenu.js');
         $nwjsServer->nwjsEval($code);
     }) ;

@@ -29,6 +29,7 @@ class NwJsServerWS implements MessageComponentInterface {
             )
         ) ;
 
+        // todo voir is on veux un --mixed-context ?
         $reactor = new SocketServer('127.0.0.1:9400',[], $loop) ;
         new IoServer($component,$reactor,$loop); // attach serverWs to Loop
         $process = new Process('sudo pkill nw ; sleep 1 ; sudo pkill nw; /home/david/poc/nwjsPhp/nwjs-sdk-v0.92.0-linux-x64/nw .  ' . $TOKEN ,__DIR__ . '/nwjs/'); // todo trouver mieux ..
@@ -119,5 +120,10 @@ class NwJsServerWS implements MessageComponentInterface {
     public function nwjsEval($code)
     {
         $this->lastAuthClient->send(json_encode(['action' => 'eval', 'code' => $code]));
+    }
+
+    public function createWindow(string $page)
+    {
+        $this->lastAuthClient->send(json_encode(['action' => 'createWindow', 'page' => $page]));
     }
 }

@@ -43,6 +43,12 @@ client.on('connect', function(connection) {
                 }
 
             }
+            else if (message.action == 'createWindow')
+            {
+                nw.Window.open(message.page, {}, function(win) {
+                    win.showDevTools();
+                });
+            }
             else if(message.action == 'auth')
             {
                 if (message.result)
@@ -88,3 +94,4 @@ function sendMessage(connection,message)
     console.log("Sending",message);
     connection.sendUTF(JSON.stringify(message));
 }
+
