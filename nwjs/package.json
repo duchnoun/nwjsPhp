@@ -1,0 +1,20 @@
+{
+  "name": "main",
+  "chromium-args": "--enable-logging=stderr --disable-web-security --allow-running-insecure-content --mixed-context",
+  "window": {
+    "show": true,
+    "frame": true,
+    "toolbar": true,
+    "show_in_taskbar": true,
+    "min_width": 100,
+    "min_height": 100,
+    "resizable": true
+  },
+  "main": "main.js",
+  "node-main": "node-main.js",
+  "node-remote": "*://*",
+  "domain": "127.0.0.1",
+  "dependencies": {
+    "websocket": "^1.0.35"
+  }
+}

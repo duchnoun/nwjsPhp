@@ -1,0 +1,4 @@
+.castor/
+*.tar.gz
+nwjs/node_modules/
+nwjs-sdk-v0.92.0-linux-x64/
